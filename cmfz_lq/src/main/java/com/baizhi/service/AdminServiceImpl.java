@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.AdminDAO;
 import com.baizhi.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +18,7 @@ public class AdminServiceImpl implements AdminService{
     AdminDAO adminDAO;
 
     @Override
+    @AopAnnocation
     public Map<String,Object> regist(String name,String password) {
         Map<String,Object> map = new HashMap<>();
         Admin admin= adminDAO.regist(name);

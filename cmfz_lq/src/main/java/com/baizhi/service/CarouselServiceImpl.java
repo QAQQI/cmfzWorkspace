@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.CarouselDAO;
 import com.baizhi.entity.Carousel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,11 +48,13 @@ public class CarouselServiceImpl implements CarouselService {
     }
 
     @Override
+    @AopAnnocation
     public int count() {
         return carouselDAO.count();
     }
 
     @Override
+    @AopAnnocation
     public List<Carousel> limit(Map<String, Integer> map) {
         int pageNo = map.get("pageNo");
         int pageSize = map.get("pageSize");
@@ -62,6 +65,7 @@ public class CarouselServiceImpl implements CarouselService {
     }
 
     @Override
+    @AopAnnocation
     public List<Carousel> queryAll() {
         List<Carousel> carousels = carouselDAO.queryAll();
         return carousels;

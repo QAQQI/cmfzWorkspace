@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.AlbumDAO;
 import com.baizhi.entity.Album;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class AlbumServiceImpl implements AlbumService {
     AlbumDAO albumDAO;
 
     @Override
+    @AopAnnocation
     public int count() {
         int count = albumDAO.count();
         return count;
@@ -50,6 +52,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
+    @AopAnnocation
     public List<Album> limit(Map<String, Integer> map) {
         int pageNo = map.get("pageNo");
         int pageSize = map.get("pageSize");

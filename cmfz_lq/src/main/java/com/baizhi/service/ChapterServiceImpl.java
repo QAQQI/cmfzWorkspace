@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.ChapterDAO;
 import com.baizhi.entity.Chapter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class ChapterServiceImpl implements ChapterService{
     }
 
     @Override
+    @AopAnnocation
     public List<Chapter> limit(Map<String, Object> map) {
         int pageNo = (int)map.get("pageNo");
         int pageSize = (int)map.get("pageSize");
@@ -45,6 +47,7 @@ public class ChapterServiceImpl implements ChapterService{
     }
 
     @Override
+    @AopAnnocation
     public int count() {
         return chapterDAO.count();
     }

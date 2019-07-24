@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.ArticleDAO;
 import com.baizhi.entity.Article;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     ArticleDAO articleDAO;
     @Override
+    @AopAnnocation
     public List<Article> limit(Map<String, Integer> map) {
         int pageNo = map.get("pageNo");
         int pageSize = map.get("pageSize");
@@ -42,6 +44,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @AopAnnocation
     public int count() {
         return articleDAO.count();
     }

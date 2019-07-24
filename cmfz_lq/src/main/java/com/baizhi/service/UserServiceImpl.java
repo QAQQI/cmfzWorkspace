@@ -1,5 +1,6 @@
 package com.baizhi.service;
 
+import com.baizhi.Annotation.AopAnnocation;
 import com.baizhi.dao.UserDAO;
 import com.baizhi.entity.Echarts;
 import com.baizhi.entity.User;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserDAO userDAO;
     @Override
+    @AopAnnocation
     public List<User> limit(Map<String, Integer> map) {
         int pageNo = map.get("pageNo");
         int pageSize = map.get("pageSize");
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
         return uu;
     }
     @Override
+    @AopAnnocation
     public void queryProvinceEcharts() {
         List<Map<String, Object>> maps = userDAO.queryProvinceEcharts();
         List<Echarts> list1 = new ArrayList<>();
@@ -68,6 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @AopAnnocation
     public void queryMothEcharts() {
         List<Map<String, Object>> maps = userDAO.queryMothEcharts();
         List<String> list1 = new ArrayList<>();
@@ -86,6 +90,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @AopAnnocation
     public User regist(User user) {
         UUID uuid = UUID.randomUUID();
         String uu = uuid.toString();
@@ -106,18 +111,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @AopAnnocation
     public List<User> queryAll() {
         List<User> users = userDAO.queryAll();
         return users;
     }
 
     @Override
+    @AopAnnocation
     public User queryByPhone(String phone) {
         User user = userDAO.queryByPhone(phone);
         return user;
     }
 
     @Override
+    @AopAnnocation
     public User queyOne(User user) {
         User user1 = userDAO.queryOne(user);
         return user1;
@@ -145,6 +153,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @AopAnnocation
     public int count() {
         return userDAO.count();
     }
