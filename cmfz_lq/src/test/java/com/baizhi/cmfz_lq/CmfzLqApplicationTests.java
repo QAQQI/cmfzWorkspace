@@ -154,6 +154,7 @@ public class CmfzLqApplicationTests {
     @Test
     public void test6() {
         userService.queryMothEcharts();
+        System.out.println("111111111111111111");
     }
 
     @Test
