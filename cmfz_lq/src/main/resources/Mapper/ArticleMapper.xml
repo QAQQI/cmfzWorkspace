@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.ArticleDAO">
+    <select id="limit" resultType="Article" parameterType="Map">
+       select article_id id,guru_id gid,title,content,publish_time publishTime from c_article limit #{pageNo}, #{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from c_article
+    </select>
+    <delete id="delete">
+        delete from c_article where article_id in
+        <foreach collection="array" open="(" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <insert id="save" parameterType="Article">
+        insert into c_article values (#{id},#{gid},#{title},#{content},#{publishTime})
+    </insert>
+</mapper>

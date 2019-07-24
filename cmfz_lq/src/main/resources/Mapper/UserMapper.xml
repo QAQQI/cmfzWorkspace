@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.UserDAO">
+    <select id="queryAll" resultType="User">
+        select user_id id,phone,password,salt,dharmaName,province,city,gender,personal_sign personalSign,profile,status,regist_time registTime from c_user
+    </select>
+
+    <select id="limit" resultType="User" parameterType="Map">
+       select user_id id,phone,password,salt,dharmaName,province,city,gender,personal_sign personalSign,profile,status,regist_time registTime from c_user limit #{pageNo}, #{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from c_user
+    </select>
+    <insert id="save" parameterType="User">
+        insert into c_user (user_id,phone,password,salt,dharmaName,province,city,gender,personal_sign,profile,status,regist_time) values (#{id},#{phone},#{password},#{salt},#{dharmaName},#{province},#{city},#{gender},#{personalSign},#{profile},#{status},#{registTime})
+    </insert>
+    <delete id="delete">
+        delete from c_user where user_id in
+        <foreach collection="array" open="(" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="User">
+    	update c_user set phone=#{phone},password=#{password},salt=#{salt},dharmaName=#{dharmaName},province=#{province},city=#{city},gender=#{gender},personal_sign=#{personalSign},status=#{status} where user_id=#{id}
+    </update>
+    <update id="updatePath" parameterType="Map">
+        update c_user set profile=#{profile} where user_id=#{id}
+    </update>
+    <select id="queryOne" parameterType="User" resultType="User">
+        select salt from c_user where user_id=#{id} and password=#{password}
+    </select>
+    <select id="queryByPhone" resultType="User" parameterType="String">
+        select user_id id,phone,password,salt,dharmaName,province,city,gender,personal_sign personalSign,profile,status,regist_time registTime from c_user where phone=#{phone}
+    </select>
+    <select id="queryMothEcharts" resultType="Map">
+        select count(*) count, left(regist_time,7) month from c_user GROUP BY left(regist_time,7) ORDER BY regist_time ASC
+    </select>
+    <select id="queryProvinceEcharts" resultType="Map">
+        select count(*) count,province,gender from c_user GROUP BY province,gender
+    </select>
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baizhi.dao.AlbumDAO">
+    <select id="limit" parameterType="Map" resultType="Album">
+        select album_id id,title,cover,count,score,author,broadcast,brief,publish_time publishTime from c_album limit #{pageNo}, #{pageSize}
+    </select>
+    <select id="count" resultType="int">
+        select count(*) from c_album
+    </select>
+    <insert id="save" parameterType="Album">
+        insert into c_album (album_id,title,cover,count,score,author,broadcast,brief,publish_time) values (#{id},#{title},#{cover},#{count},#{score},#{author},#{broadcast},#{brief},#{publishTime})
+    </insert>
+    <delete id="delete">
+        delete from c_album where album_id in
+        <foreach collection="array" open="(" item="id" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="Album">
+    	update c_album set title=#{title},count=#{count},score=#{score},author=#{author},broadcast=#{broadcast},brief=#{brief},publish_time=#{publishTime} where album_id=#{id}
+    </update>
+    <update id="updatePath" parameterType="Map">
+        update c_album set cover=#{cover} where album_id=#{id}
+    </update>
+
+</mapper>
