@@ -16,6 +16,6 @@ public interface UserService {
     public List<User> queryAll();
     public User queryByPhone(String phone);
     public User regist(User user);
-    public void queryMothEcharts();
-    public void queryProvinceEcharts();
+    public String queryMothEcharts();
+    public String queryProvinceEcharts();
 }

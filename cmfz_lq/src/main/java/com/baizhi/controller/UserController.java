@@ -6,6 +6,7 @@ import com.baizhi.dto.UserDto;
 import com.baizhi.entity.User;
 import com.baizhi.service.UserService;
 import com.baizhi.utils.MD5Utils;
+import io.goeasy.GoEasy;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -202,12 +203,16 @@ public class UserController {
     @RequestMapping("mothecharts")
     @ResponseBody
     public void mothecharts() {
-        userService.queryMothEcharts();
+        String s = userService.queryMothEcharts();
+        GoEasy goEasy = new GoEasy("https://rest-hangzhou.goeasy.io", "BC-8f3be71a181546e1b56e77b861b5e85a");
+        goEasy.publish("demo_channel", s);
     }
 
     @RequestMapping("provinceecharts")
     @ResponseBody
     public void provinceecharts() {
-        userService.queryProvinceEcharts();
+        String s = userService.queryProvinceEcharts();
+        GoEasy goEasy = new GoEasy("https://rest-hangzhou.goeasy.io", "BC-8f3be71a181546e1b56e77b861b5e85a");
+        goEasy.publish("demo_channel0", s);
     }
 }

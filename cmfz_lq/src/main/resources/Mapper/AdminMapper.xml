@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.baizhi.dao.AdminDAO">
+    <resultMap id="adminMap" type="Admin">
+        <id column="admin_id" property="adminId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <collection property="roles" ofType="Role">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="roleName"/>
+            <collection property="authorities" ofType="Authority">
+                <id column="authority_id" property="id"/>
+                <result column="authority_name" property="authorityName"/>
+            </collection>
+        </collection>
+    </resultMap>
     <select id="regist" resultType="Admin" parameterType="String">
-        select admin_id adminId,username,password from c_admin where username=#{name}
+        select admin_id adminId,username,password,salt from c_admin where username=#{name}
+    </select>
+    <select id="selectAdmin" resultMap="adminMap">
+        SELECT a.admin_id,a.username,a.password,a.salt,c.role_id,c.role_name,e.authority_id,e.authority_name
+        FROM c_admin a
+        RIGHT JOIN c_admin_role b ON a.admin_id=b.admin_id
+        RIGHT JOIN c_role c ON b.role_id=c.role_id
+        LEFT JOIN c_role_authority d ON c.role_id=d.role_id
+        LEFT JOIN c_authority e ON d.authority_id=e.authority_id
+        WHERE a.username=#{username}
     </select>
 </mapper>

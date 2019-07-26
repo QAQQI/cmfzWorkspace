@@ -2,16 +2,29 @@ package com.baizhi.cmfz_lq;
 
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
+import com.aliyuncs.CommonRequest;
+import com.aliyuncs.CommonResponse;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.IAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.http.MethodType;
+import com.aliyuncs.profile.DefaultProfile;
 import com.baizhi.Annotation.UserAnnotation;
-import com.baizhi.entity.Echarts;
+import com.baizhi.dao.AdminDAO;
+import com.baizhi.entity.Admin;
 import com.baizhi.entity.User;
 import com.baizhi.service.CarouselService;
 import com.baizhi.service.UserService;
-import com.google.gson.Gson;
-import io.goeasy.GoEasy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.config.IniSecurityManagerFactory;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.Subject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +35,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.lang.reflect.Field;
-import java.util.*;
-
-import com.aliyuncs.CommonRequest;
-import com.aliyuncs.CommonResponse;
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.IAcsClient;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.exceptions.ServerException;
-import com.aliyuncs.http.MethodType;
-import com.aliyuncs.profile.DefaultProfile;
+import java.util.Date;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -162,8 +167,9 @@ public class CmfzLqApplicationTests {
     public void test7() {
         userService.queryProvinceEcharts();
     }
+
     @Test
-    public void test8(){
+    public void test8() {
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAIayx5CNbMf8Cc", "Kvn0qmnYGejbOK8sNWT3eQQe9Oea8D");
         IAcsClient client = new DefaultAcsClient(profile);
         CommonRequest request = new CommonRequest();
@@ -185,11 +191,48 @@ public class CmfzLqApplicationTests {
             e.printStackTrace();
         }
     }
+
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
     @Test
-    public void test9(){
+    public void test9() {
         String name = stringRedisTemplate.opsForValue().get("name");
         System.out.println(name);
+    }
+
+    @Test
+    public void testShiro() {
+        IniSecurityManagerFactory iniSecurityManagerFactory = new IniSecurityManagerFactory();
+        SecurityManager instance = iniSecurityManagerFactory.getInstance();
+        SecurityUtils.setSecurityManager(instance);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken("liuqi", "123456");
+        try {
+            subject.login(token);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        boolean authenticated = subject.isAuthenticated();
+        boolean vip = subject.hasRole("vip");
+        System.out.println(authenticated);
+        if(vip){
+            System.out.println("可以使用vip所有权限");
+        }else {
+            System.out.println("不是vip");
+        }
+        boolean permitted = subject.isPermitted("article:delete");
+        if(permitted){
+            System.out.println("可以对文章进行删除");
+        }else {
+            System.out.println("没有权限删除文章");
+        }
+    }
+    @Autowired
+    AdminDAO adminDAO;
+    @Test
+    public void test10(){
+        Admin admin = adminDAO.selectAdmin("liuqi");
+        System.out.println(admin);
     }
 }

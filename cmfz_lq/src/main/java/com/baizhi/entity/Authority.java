@@ -9,9 +9,9 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-@Accessors(chain = true)
 @AllArgsConstructor
-public class Echarts implements Serializable {
-    private String name;
-    private int value;
+@Accessors(chain = true)
+public class Authority implements Serializable {
+    private String id;
+    private String authorityName;
 }

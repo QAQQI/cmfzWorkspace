@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     @AopAnnocation
-    public void queryProvinceEcharts() {
+    public String queryProvinceEcharts() {
         List<Map<String, Object>> maps = userDAO.queryProvinceEcharts();
         List<Echarts> list1 = new ArrayList<>();
         List<Echarts> list2 = new ArrayList<>();
@@ -63,16 +63,16 @@ public class UserServiceImpl implements UserService {
         Map<String, List<Echarts>> map = new HashMap<>();
         map.put("m", list1);
         map.put("w", list2);
-        System.out.println(map);
         Gson gson = new Gson();
         String s = gson.toJson(map);
         GoEasy goEasy = new GoEasy("https://rest-hangzhou.goeasy.io", "BC-8f3be71a181546e1b56e77b861b5e85a");
         goEasy.publish("demo_channel0", s);
+        return s;
     }
 
     @Override
     @AopAnnocation
-    public void queryMothEcharts() {
+    public String queryMothEcharts() {
         List<Map<String, Object>> maps = userDAO.queryMothEcharts();
         List<String> list1 = new ArrayList<>();
         List<Integer> list2 = new ArrayList<>();
@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
         String s = gson.toJson(map);
         GoEasy goEasy = new GoEasy("https://rest-hangzhou.goeasy.io", "BC-8f3be71a181546e1b56e77b861b5e85a");
         goEasy.publish("demo_channel", s);
+        return s;
     }
 
     @Override
