@@ -9,5 +9,6 @@ public class MD5Test {
         Md5Hash jiaojiao = new Md5Hash("123456", "jiaojiao", 1024);
         String s = jiaojiao.toHex();
         System.out.println(s);
+        System.out.println("liuqi");
     }
 }
