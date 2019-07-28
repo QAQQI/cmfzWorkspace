@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <shiro:hasRole name="normal">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingOne" >
             <h4 class="panel-title" data-toggle="collapse" data-target="#collapseOne" data-parent="#accordion">
@@ -14,6 +16,8 @@
             </div>
         </div>
     </div>
+    </shiro:hasRole>
+    <shiro:hasRole name="vip">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingTwo">
             <h4 class="panel-title" data-toggle="collapse" data-target="#collapseTwo" data-parent="#accordion">
@@ -42,6 +46,8 @@
             </div>
         </div>
     </div>
+    </shiro:hasRole>
+    <shiro:hasRole name="svip">
     <div class="panel panel-default">
         <div class="panel-heading" role="tab" id="headingFour">
             <h4 class="panel-title" data-toggle="collapse" data-target="#collapseFour" data-parent="#accordion">
@@ -60,4 +66,5 @@
             </div>
         </div>
     </div>
+    </shiro:hasRole>
 </div>

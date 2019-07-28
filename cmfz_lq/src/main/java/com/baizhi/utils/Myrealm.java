@@ -4,7 +4,6 @@ import com.baizhi.dao.AdminDAO;
 import com.baizhi.entity.Admin;
 import com.baizhi.entity.Authority;
 import com.baizhi.entity.Role;
-import com.sun.scenario.effect.impl.prism.PrRenderInfo;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;

@@ -1,4 +1,22 @@
 <%@page isELIgnored="false" pageEncoding="UTF-8" contentType="text/html; UTF-8" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
+<shiro:hasPermission name="user:updatePassword">
+    <script type="text/javascript">
+        alert("22");
+        function edit(){
+            $('.edit').css('display','');//display不用block原因是避免改变行间样式
+        }
+    </script>
+</shiro:hasPermission>
+
+<shiro:hasPermission name="carousel:add">
+    <script type="text/javascript">
+        function add(){
+            $('.add').css('display','');
+        }
+    </script>
+</shiro:hasPermission>
+
 <script>
     $(function () {
         $("#table1").jqGrid({
@@ -24,6 +42,15 @@
                 name: "createTime", editable: true,edittype:"date"
             }],
             pager: "#page",
+            // loadComplete: function() {//重点，loadComplete方法为在表格加载完毕之后执行
+            //     if(typeof edit!= 'undefined' && edit instanceof Function){//验证方法是否存在，如果shiro没有权限这个方法就不会存在，
+            //         //如果用户有编辑权限，就会执行此edit方法，展示编辑按钮
+            //         edit();
+            //     }
+            //     if(typeof add!= 'undefined' && add instanceof Function){
+            //         add();
+            //     }
+            // },
             viewrecords: true,
             rowNum: 4,
             rowList: [2, 4, 6, 8],

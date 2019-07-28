@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript">
     $(function () {
@@ -39,20 +40,18 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <c:if test="${empty sessionScope.admin}">
-                <li><p class="navbar-text">请先登陆</p></li>
-                </c:if>
-                <c:if test="${not empty sessionScope.admin}">
-                    <li><p class="navbar-text">欢迎：${sessionScope.admin.username}</p></li>
-                </c:if>
-                <li class="dropdown">
-                    <a href="javascript:void(0)" data-toggle="modal" data-target="#addUser"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
-                </li>
-                <li><p class="navbar-text">退出登陆</p></li>
-                <li class="dropdown">
-                    <a href="${pageContext.request.contextPath}/admin/exit"><span class="glyphicon glyphicon-log-in"
-                                                   aria-hidden="true"></span></a>
-                </li>
+                <shiro:guest>
+                    <li class="dropdown">
+                        <a href="javascript:void(0)" data-toggle="modal" data-target="#addUser">请先登陆&nbsp;<span class="glyphicon glyphicon-user" aria-hidden="true"></span></a>
+                    </li>
+                </shiro:guest>
+                <shiro:user>
+                    <li><p class="navbar-text">欢迎：<shiro:principal></shiro:principal></p></li>
+                    <li class="dropdown">
+                        <a href="${pageContext.request.contextPath}/admin/exit">退出登陆&nbsp;<span class="glyphicon glyphicon-log-in"
+                                                                                                aria-hidden="true"></span></a>
+                    </li>
+                </shiro:user>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

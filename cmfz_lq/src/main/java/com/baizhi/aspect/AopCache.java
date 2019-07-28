@@ -12,6 +12,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+/*
 @Configuration
 @Aspect
 @Slf4j
@@ -58,3 +59,4 @@ public class AopCache {
         }
     }
 }
+*/

@@ -19,22 +19,20 @@ public class AdminServiceImpl implements AdminService{
 
     @Override
     @AopAnnocation
-    public Map<String,Object> regist(String name,String password) {
+    public Admin regist(String name,String password) {
         Map<String,Object> map = new HashMap<>();
         Admin admin= adminDAO.regist(name);
         if(admin==null){
             map.put("code","300");
             map.put("message","用户名不存在");
-            return map;
         }else if(admin.getPassword().equals(password)){
             map.put("code","200");
             map.put("message","登录成功");
             map.put("regist",admin);
-            return map;
         }else {
             map.put("code","400");
             map.put("message","密码错误");
-            return map;
         }
+        return admin;
     }
 }
